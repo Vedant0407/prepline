@@ -6,7 +6,8 @@
 
 - `ground_truth.csv`: empty schema template for examples that have been reviewed by a human.
 - `candidate_mappings_for_review.csv`: 392 synthetic coverage prompts, not actual interview questions and not ground truth.
-- ``source_backed_mappings_for_review.csv`: 202 unique source-linked mapping candidates derived from publicly indexed interview reports. Each is marked `needs_human_review`; none is automatically promoted to ground truth.
+- `source_backed_mappings_for_review.csv`: 202 source-linked mapping candidates derived from publicly indexed interview-report summaries; all need review and are not cleared for production use.
+- `codeprep_mappings_for_review.csv`: 78 candidate mappings from CodePrep's CC BY 4.0 question bank, with attribution and human review still required; see `data/raw/interviews/LICENSED_QUESTION_SOURCE.md`.
 - `evaluate_nlp.py`: compares keyword overlap, TF-IDF cosine similarity, and `all-MiniLM-L6-v2` sentence embeddings.
 - `requirements.txt`: required Python packages.
 
@@ -64,4 +65,4 @@ The script requires explicit `verified`/`approved` review status, reviewer, revi
 
 ## Current status
 
-The candidate annotation scaffold is committed. The candidate pool now contains 202 unique source-linked rows, but the verified benchmark is **not complete** until 200+ distinct sourced mappings have passed human review. Candidate rows are not ground truth. The interview index in `data/raw/interviews/` is a discovery list whose source eligibility and deduplication still need review.
+The candidate annotation scaffold is committed. The candidate pool contains 202 public-report-derived rows plus 78 candidates from the CC BY 4.0 CodePrep question bank. These are not accepted labels. The verified benchmark is **not complete** until 200+ distinct, eligible mappings have passed human review. Candidate rows are not ground truth. The interview index in `data/raw/interviews/` is a discovery list whose source eligibility and deduplication still need review.
