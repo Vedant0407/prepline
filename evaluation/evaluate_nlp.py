@@ -19,7 +19,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.model_selection import train_test_split
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_TAXONOMY = ROOT / "data" / "taxonomy" / "taxonomy_v1.0.json"
+DEFAULT_TAXONOMY = ROOT / "data" / "taxonomy" / "taxonomy_v1.1.json"
 DEFAULT_DATA = ROOT / "evaluation" / "ground_truth.csv"
 RANDOM_STATE = 42
 
