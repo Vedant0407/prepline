@@ -2,6 +2,8 @@
 
 ## Files
 
+- `SOURCE_REVIEW_LOG.md` at repository root (`evaluation/SOURCE_REVIEW_LOG.md`): source discovery log and candidate taxonomy mappings. These are not legally cleared sources or human-verified labels.
+
 - `ground_truth.csv`: empty schema template for examples that have been reviewed by a human.
 - `candidate_mappings_for_review.csv`: 392 draft candidate mappings covering 56 topics in `data/taxonomy/taxonomy_v1.1.json`. All are synthetic coverage prompts, not actual interview questions and not verified ground truth.
 - `evaluate_nlp.py`: compares keyword overlap, TF-IDF cosine similarity, and `all-MiniLM-L6-v2` sentence embeddings.
@@ -28,6 +30,16 @@ The source can be a permitted interview-experience page or syllabus item. Do not
 ## Taxonomy
 
 The original `data/taxonomy/taxonomy_v1.0.json` is preserved. The expanded `data/taxonomy/taxonomy_v1.1.json` contains 56 topics spanning DSA, DBMS, OS, Computer Networks, and System Design.
+
+## Readiness check
+
+From the repository root, run:
+
+```bash
+python scripts/check_phase_readiness.py
+```
+
+This check reports whether explicit Phase 2 and Phase 13 acceptance fields pass. It does not itself establish source legality or validate the quality of a human review.
 
 ## Run
 
