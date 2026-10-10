@@ -75,7 +75,7 @@ To finish the remaining external/manual gates, a human reviewer with access to t
 
 ## Latest candidate expansion (2026-10-10)
 
-The source-backed candidate pool now has 202 unique text/topic pairs across indexed public interview-experience pages. Rows remain explicitly unverified; several sources may describe overlapping question patterns, and duplicate question/topic pairs must be resolved during review. This does not count as 200 accepted benchmark labels. The ground-truth CSV remains header-only.
+The source-backed candidate pool now has 202 unique text/topic pairs across indexed public interview-experience pages. Rows remain explicitly unverified; some underlying interview reports discuss similar problems; row-level exact text/topic duplicates were removed, but report-level cross-posts and source independence still require review. This does not count as 200 accepted benchmark labels. The ground-truth CSV remains header-only.
 
 
 Duplicate cleanup note (2026-10-10): 39 repeated raw-text/topic pairs were removed from the candidate pool, and 27 distinct source-linked candidates were added. The file now has 202 unique raw-text/topic pairs. All remain `needs_human_review`; this is a candidate pool, not accepted ground truth.
