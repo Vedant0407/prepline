@@ -1,6 +1,11 @@
 # Prepline Phase 2 + Phase 13 Status
 
-Updated: 2026-10-10
+Updated: 2026-10-10 (source review pass)
+
+## Latest work in this pass
+
+- Added `evaluation/SOURCE_REVIEW_LOG.md` with 12 publicly discoverable interview-experience candidates, topic-level summaries, candidate taxonomy mapping suggestions, and explicit source/legal/deduplication caveats.
+- Added `scripts/check_phase_readiness.py`, which checks explicit completion fields and refuses to mark either phase ready while minimum acceptance gates are open.
 
 ## Phase 2 — Dataset construction
 
@@ -11,7 +16,7 @@ Implemented in repository:
 - Phase 2 README describing schema, source review, deduplication, legal-use checks, and ingestion expectations.
 
 Still required before Phase 2 can be marked complete:
-- Open and review each candidate source.
+- Open and review each candidate source; the new source-review log is discovery evidence, not legal clearance or proof of independence.
 - Confirm at least 15 independent, eligible Amazon SDE-I reports after cross-post/deduplication checks.
 - Complete legal-use review for source terms.
 - Run the syllabus downloader locally, verify text-selectability, and preserve the original PDF at `data/raw/syllabi/VIT_CSE_2024_2025.pdf`.
