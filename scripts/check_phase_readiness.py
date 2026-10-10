@@ -14,6 +14,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 INTERVIEWS = ROOT / "data/raw/interviews/amazon_sde1_interview_experiences_phase2.csv"
 GROUND_TRUTH = ROOT / "evaluation/ground_truth.csv"
+CANDIDATES = ROOT / "evaluation/source_backed_mappings_for_review.csv"
 TAXONOMY = ROOT / "data/taxonomy/taxonomy_v1.1.json"
 SYLLABUS = ROOT / "data/raw/syllabi/VIT_CSE_2024_2025.pdf"
 
@@ -45,6 +46,14 @@ def main():
     else:
         taxonomy = json.loads(TAXONOMY.read_text(encoding="utf-8"))
         valid_topic_ids = {topic["topic_id"] for topic in taxonomy.get("topics", [])}
+
+    candidates = read_csv(CANDIDATES) if CANDIDATES.exists() else []
+    candidate_pairs = {
+        (row.get("raw_text", "").strip().casefold(), row.get("expected_topic_id", "").strip())
+        for row in candidates
+        if row.get("raw_text", "").strip() and row.get("expected_topic_id", "").strip() in valid_topic_ids
+    }
+    print(f"Phase 13 candidate pool: {len(candidates)} rows; {len(candidate_pairs)} unique valid text/topic pairs (candidates do not satisfy the verified-label gate).")
 
     labels = read_csv(GROUND_TRUTH) if GROUND_TRUTH.exists() else []
     accepted = []
