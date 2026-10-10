@@ -15,7 +15,7 @@ Phase 2 and Phase 13 are **in progress, not accepted as complete**. The reposito
 - [Benchmark evaluator](evaluation/evaluate_nlp.py)
 - [Readiness checker](scripts/check_phase_readiness.py)
 - [Human review workflow](evaluation/HUMAN_REVIEW_WORKFLOW.md)
-- [Phase 13 review CLI](scripts/review_phase13_candidates.py)
+- [Phase 13 review CLI](scripts/review_phase13_candidates.py) (approved labels go to `ground_truth.csv`; all decisions go to `review_decisions.csv`)
 - [Phase 2 contributor guide](data/raw/interviews/CONTRIBUTION_GUIDE.md)
 - [Licensed CodePrep candidate mappings](evaluation/codeprep_mappings_for_review.csv)
 
