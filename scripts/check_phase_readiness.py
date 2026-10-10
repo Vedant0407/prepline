@@ -95,12 +95,12 @@ def main():
         failures.append("Phase 13: duplicate approved text/topic pairs exist in ground_truth.csv.")
 
     if failures:
-        print("\\nNOT READY:")
+        print("\nNOT READY:")
         for failure in failures:
             print(f"- {failure}")
-        print("\\nDo not report final benchmark metrics until every gate is satisfied.")
+        print("\nDo not report final benchmark metrics until every gate is satisfied.")
         return 1
-    print("\\nReadiness fields pass. Independently confirm reviewer work and run the evaluation on the frozen dataset.")
+    print("\nReadiness fields pass. Independently confirm reviewer work and run the evaluation on the frozen dataset.")
     return 0
 
 
