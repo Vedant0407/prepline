@@ -123,3 +123,17 @@ These code additions do not fill the external evidence gaps: the syllabus file i
 - The latest GitHub Actions run for commit `754bccaceee0e31ae28c7f46b3e6ee5b78afb245` completed successfully: [workflow run](https://github.com/Vedant0407/prepline/actions/runs/38071503442).
 
 The CLI is a working prototype, not evidence that the source-data gates have passed. The current VIT PDF provides a 21-row Discipline Core catalog on printed page 2, but does not include detailed module-level syllabi for those core courses in the extractable sections identified so far. The PDF has 10 curriculum pages followed by annexure material for other courses; course-topic mapping must not be inferred from course titles alone. Phase 2/13 remain blocked by source permission/independence review, detailed syllabus-topic evidence, and 200 genuinely human-reviewed mappings.
+
+## Additional source-eligibility check (2026-10-10)
+
+- Checked Jointaro/Taro's published terms at https://www.jointaro.com/terms/ and robots.txt at https://www.jointaro.com/robots.txt. The terms prohibit spidering, crawling, and scraping. Robots.txt allowing crawlers does not grant content-reuse or redistribution rights. The Jointaro candidate CSV found in the project workspace must therefore remain a discovery index unless written permission or an applicable separate license is confirmed.
+- Added `data/raw/interviews/PERMISSION_REQUEST_TEMPLATE.md` to request explicit written permission for the intended academic use.
+- This does not close the legal-use gate: no written permission has been received. LeetCode and GeeksforGeeks remain excluded from the production corpus unless permission is obtained.
+
+## Current completion decision
+
+**Phase 2: NOT COMPLETE.** The repository has a 21-row catalog of Discipline Core courses and a discovery index of interview reports, but there are not 15 eligible reports with documented source permission, role/cohort review, and independent-report evidence. The official PDF's full topic-level syllabus extraction is also not committed as a verified structured dataset.
+
+**Phase 13: NOT COMPLETE.** Candidate pools are useful for annotation, but `evaluation/ground_truth.csv` still has no accepted human-reviewed rows. The 200-label threshold, frozen 70/15/15 split, and benchmark results cannot be honestly claimed until permitted examples have been reviewed and accepted. CI passing only validates repository checks; it is not evidence that these research gates pass.
+
+The remaining gates require external evidence or actual human decisions. Do not change candidate status to approved to make readiness pass. Use the permission request template and review workflow; retain the reply/permission basis and reviewer decisions in the repository.
