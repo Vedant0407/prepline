@@ -6,7 +6,9 @@ Updated: 2026-10-10 (source review pass)
 
 - Added `evaluation/SOURCE_REVIEW_LOG.md` with 12 publicly discoverable interview-experience candidates, topic-level summaries, candidate taxonomy mapping suggestions, and explicit source/legal/deduplication caveats.
 - Added `evaluation/source_backed_mappings_for_review.csv` with 202 unique source-linked topic-mapping candidates from publicly indexed interview reports. Every row remains `needs_human_review` and is excluded from benchmark metrics.
-- Added `scripts/check_phase_readiness.py`, which checks explicit completion fields and refuses to mark either phase ready while minimum acceptance gates are open.
+- Added `scripts/check_phase_readiness.py` and `scripts/validate_prepline_data.py` for fail-closed acceptance checks and schema/topic-reference validation.
+- Added repository tests and `.github/workflows/validate-data.yml` so schema/taxonomy checks run on pushes and pull requests.
+- Updated review CLI so approval decisions alone enter `ground_truth.csv`; rejections are recorded in `evaluation/review_decisions.csv`.
 
 ## Phase 2 — Dataset construction
 
