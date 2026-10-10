@@ -13,6 +13,7 @@ Updated: 2026-10-10 (source review pass)
 Implemented in repository:
 - Source-linked Amazon SDE-I interview experience discovery CSV with round/question-topic summaries and review fields.
 - Official VIT CSE 2024-25 syllabus manifest with the official PDF URL and course-code scope.
+- Extracted the Discipline Core course catalog from the user's available VIT syllabus PDF into `data/raw/syllabi/vit_cse_2024_2025_discipline_core_catalog.csv` (21 rows, printed page 2); added `data/raw/syllabi/README.md` with provenance and limitations.
 - Downloader script that fetches the PDF from VIT's official host, validates the PDF signature, and prints SHA-256.
 - Phase 2 README describing schema, source review, deduplication, legal-use checks, and ingestion expectations.
 
@@ -53,7 +54,7 @@ A further public-source research pass confirmed examples of topic summaries from
 - https://www.geeksforgeeks.org/interview-experiences/amazon-interview-experience-for-sde-1-25/
 - https://www.geeksforgeeks.org/interview-experiences/amazon-interview-experience-sde-1-2/
 
-The official VIT PDF download was attempted from the current execution environment but could not be retrieved because outbound DNS/network access was unavailable. Therefore the syllabus file has not been verified as present in the repository by this pass.
+The official VIT PDF download was attempted from the current execution environment but could not be retrieved because outbound DNS/network access was unavailable. The user's library copy was available, so a 21-row Discipline Core catalog was extracted and committed. The original PDF binary is still not stored in the repository, and full syllabus text/topic extraction remains pending.
 
 ### Final status
 
