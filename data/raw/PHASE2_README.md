@@ -35,3 +35,8 @@ The PDF is fetched from the official VIT URL in the manifest. Do not substitute 
 ## Downstream ingestion
 
 Only after the review gates pass should the pipeline parse interview reports and syllabus topics into `data/processed/`. Preserve source identifiers and taxonomy version in all derived records.
+
+
+## Source permission
+
+Public interview pages are not automatically cleared for corpus use. See [source terms review](interviews/SOURCE_TERMS_REVIEW.md) before admitting indexed pages to the production dataset.
