@@ -44,12 +44,12 @@ def load_taxonomy(path):
 def make_splits(frame):
     """70% development, 15% validation, 15% test; fixed seed for reproducibility."""
     counts = frame["expected_topic_id"].value_counts()
-    stratify = frame["expected_topic_id"] if len(counts) and counts.min() >= 2 else None
+    stratify = frame["expected_topic_id"] if len(counts) and counts.min() >= 2 and int(np.ceil(len(frame) * 0.15)) >= len(counts) else None
     dev_val, test = train_test_split(
         frame, test_size=0.15, random_state=RANDOM_STATE, stratify=stratify
     )
     counts = dev_val["expected_topic_id"].value_counts()
-    stratify = dev_val["expected_topic_id"] if len(counts) and counts.min() >= 2 else None
+    stratify = dev_val["expected_topic_id"] if len(counts) and counts.min() >= 2 and int(np.ceil(len(dev_val) * (0.15 / 0.85))) >= len(counts) else None
     development, validation = train_test_split(
         dev_val, test_size=(0.15 / 0.85), random_state=RANDOM_STATE, stratify=stratify
     )
