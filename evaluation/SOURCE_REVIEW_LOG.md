@@ -48,3 +48,18 @@ Do not mark Phase 2 complete merely because 12 candidate URLs are listed. Indepe
 ## Phase 13 acceptance gate
 
 This log is not a substitute for 200+ human-reviewed, source-backed mappings. Populate `evaluation/ground_truth.csv` only after each row has a verifiable source and an actual reviewer/date. Keep synthetic candidates separate. Run metrics only on accepted labels, with the final test set untouched until the pipeline and threshold are frozen.
+
+
+## Additional public-indexed sources checked (2026-10-10)
+
+The following pages surfaced additional concrete topic summaries during a later search pass. They were used to add candidate rows to `evaluation/source_backed_mappings_for_review.csv`; none is cleared for bulk use and none of the new mappings is human-verified.
+
+- https://www.geeksforgeeks.org/interview-experiences/amazon-interview-experience-for-sde-1-25/ — Copy List with Random Pointer; Validate BST variant.
+- https://www.geeksforgeeks.org/interview-experiences/amazon-interview-experience-for-sde1/ — reverse string in chunks; set-bit counting; OS/DBMS/CN MCQ topics.
+- https://www.geeksforgeeks.org/interview-experiences/amazon-interview-sde-1-interview-experience/ — BST from sorted array; row with maximum ones; next greater element; rotated-array binary search.
+- https://www.geeksforgeeks.org/interview-experiences/amazon-interview-experience-sde-1-2/ — longest palindrome; sum tree; reverse list in groups; maximum-sum subsequence; top view; missing positive.
+- https://www.geeksforgeeks.org/interview-experiences/amazon-interview-experience-sde-1-20/ — meeting rooms; top-k frequent elements.
+- https://www.geeksforgeeks.org/interview-experiences/amazon-interview-experience-for-sde-1-on-campus/ — maximum units on a truck; minimum platforms; palindrome linked list; knight shortest path.
+- https://www.geeksforgeeks.org/interview-experiences/amazon-interview-experience-on-campus-for-sde-1/ — coin-change DP; range-count queries; recurrence complexity; FIFO page replacement; networking and SQL fundamentals.
+
+Source summaries were taken from public search-index excerpts. Before admission to Phase 2 or Phase 13, open each page, verify exact interpretation and role/date, check current source terms, and deduplicate cross-posts.
