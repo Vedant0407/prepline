@@ -18,9 +18,9 @@ Implemented in repository:
 - Phase 2 README describing schema, source review, deduplication, legal-use checks, and ingestion expectations.
 
 Still required before Phase 2 can be marked complete:
-- Open and review each candidate source; the new source-review log is discovery evidence, not legal clearance or proof of independence.
 - Confirm at least 15 independent, eligible Amazon SDE-I reports after cross-post/deduplication checks.
-- Complete legal-use review for source terms.
+- Written permission or replacement with appropriately licensed/directly contributed sources is required before using the current LeetCode/GeeksforGeeks index as a production corpus; see `data/raw/interviews/SOURCE_TERMS_REVIEW.md`.
+- Record permission basis, reviewer, date, and report-level deduplication evidence.
 - Run the syllabus downloader locally, verify text-selectability, and preserve the original PDF at `data/raw/syllabi/VIT_CSE_2024_2025.pdf`.
 - Parse reviewed sources into processed data while preserving provenance.
 
@@ -79,3 +79,8 @@ The source-backed candidate pool now has 202 unique text/topic pairs across inde
 
 
 Duplicate cleanup note (2026-10-10): 39 repeated raw-text/topic pairs were removed from the candidate pool, and 27 distinct source-linked candidates were added. The file now has 202 unique raw-text/topic pairs. All remain `needs_human_review`; this is a candidate pool, not accepted ground truth.
+
+
+## Source terms review update (2026-10-10)
+
+Reviewed current published terms for LeetCode and GeeksforGeeks. Both contain restrictions relevant to scraping/systematic compilation; the terms review is documented at `data/raw/interviews/SOURCE_TERMS_REVIEW.md`. Therefore current public-page summaries remain discovery candidates only. No written permission has been obtained, and Phase 2 cannot be accepted as complete on the basis of these sources alone.
