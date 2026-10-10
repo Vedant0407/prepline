@@ -5,7 +5,7 @@ Updated: 2026-10-10 (source review pass)
 ## Latest work in this pass
 
 - Added `evaluation/SOURCE_REVIEW_LOG.md` with 12 publicly discoverable interview-experience candidates, topic-level summaries, candidate taxonomy mapping suggestions, and explicit source/legal/deduplication caveats.
-- Added `evaluation/source_backed_mappings_for_review.csv` with 54 source-linked topic-mapping candidates from publicly indexed interview reports. Every row remains `needs_human_review` and is excluded from benchmark metrics.
+- Added `evaluation/source_backed_mappings_for_review.csv` with 84 source-linked topic-mapping candidates from publicly indexed interview reports. Every row remains `needs_human_review` and is excluded from benchmark metrics.
 - Added `scripts/check_phase_readiness.py`, which checks explicit completion fields and refuses to mark either phase ready while minimum acceptance gates are open.
 
 ## Phase 2 — Dataset construction
