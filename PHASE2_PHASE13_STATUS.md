@@ -41,3 +41,26 @@ Still required before Phase 13 can be marked complete:
 ## Important interpretation
 
 File counts are not completion evidence by themselves. The repository now contains scaffolding and a source discovery index, but both phases remain pending their explicit validation gates above. Do not present synthetic candidates as real interview questions or as manually verified ground truth.
+
+
+## Final execution attempt (2026-10-10)
+
+A further public-source research pass confirmed examples of topic summaries from publicly indexed Amazon SDE-1 experience pages, including graph traversal, trees, heaps, binary search, dynamic programming, strings, and linked lists. These remain candidates and must be verified against their source pages before acceptance. Examples reviewed during this pass include:
+- https://leetcode.com/discuss/post/7344078/amazon-sde-1-interview-experience-dsa-ro-mxfs/
+- https://leetcode.com/discuss/post/6915570/amazon-sde-1-interview-experience-2025-o-r3jt/
+- https://leetcode.com/discuss/post/1191068/Amazon-SDE-1-Interview-Experience/
+- https://leetcode.com/discuss/post/6414650/Amazon-SDE-1-Interview-Experience-or-February-2025-or-Offer-Received/
+- https://www.geeksforgeeks.org/interview-experiences/amazon-interview-experience-for-sde-1-25/
+- https://www.geeksforgeeks.org/interview-experiences/amazon-interview-experience-sde-1-2/
+
+The official VIT PDF download was attempted from the current execution environment but could not be retrieved because outbound DNS/network access was unavailable. Therefore the syllabus file has not been verified as present in the repository by this pass.
+
+### Final status
+
+**Not complete / not accepted yet.** No ground-truth rows have been promoted to verified, because a model-generated label cannot honestly be represented as a human reviewer’s approval. The 84 candidate mapping rows are for review only. Phase 2 sources also remain pending legal-use and independent-report checks. The readiness checker is intended to fail closed until these conditions are met.
+
+To finish the remaining external/manual gates, a human reviewer with access to the original pages must:
+1. Review current terms/permission and independence for at least 15 eligible interview reports and set review fields only when supported.
+2. Download the official PDF locally using `python scripts/download_vit_syllabus.py`, validate text extraction, and commit the PDF only if permitted by its terms; otherwise keep the official source URL and record the access decision.
+3. Verify at least 200 source-backed mappings one by one, mark them reviewed with a real reviewer identity/date, and ensure taxonomy labels are supported by each source.
+4. Run `python scripts/check_phase_readiness.py`, fix any remaining gates, then run `python evaluation/evaluate_nlp.py --data evaluation/ground_truth.csv --taxonomy data/taxonomy/taxonomy_v1.1.json`. Review split integrity and save the resulting metrics only if all preconditions pass.
