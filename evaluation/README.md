@@ -9,6 +9,9 @@
 - `source_backed_mappings_for_review.csv`: 202 source-linked mapping candidates derived from publicly indexed interview-report summaries; all need review and are not cleared for production use.
 - `codeprep_mappings_for_review.csv`: 78 candidate mappings from CodePrep's CC BY 4.0 question bank, with attribution and human review still required; see `data/raw/interviews/LICENSED_QUESTION_SOURCE.md`.
 - `evaluate_nlp.py`: compares keyword overlap, TF-IDF cosine similarity, and `all-MiniLM-L6-v2` sentence embeddings.
+- `HUMAN_REVIEW_WORKFLOW.md`: manual review steps.
+- `review_decisions.csv`: created by the review CLI to preserve both approvals and rejections; this file is not ground truth.
+- `../scripts/validate_prepline_data.py`: schema and taxonomy reference checks.
 - `requirements.txt`: required Python packages.
 
 ## Ground-truth standard
