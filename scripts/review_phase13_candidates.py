@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Human-in-the-loop review for Prepline Phase 13 mapping candidates.
 
-This tool never auto-approves a label. A reviewer must inspect each prompt,
-source, and taxonomy topic and explicitly approve/reject/defer it.
 Run from repository root:
     python scripts/review_phase13_candidates.py
+Approved rows are written to ground_truth.csv; all decisions are recorded separately.
+No candidate is auto-approved.
 """
 from __future__ import annotations
 
@@ -20,6 +20,7 @@ DEFAULT_INPUTS = [
     ROOT / "evaluation/source_backed_mappings_for_review.csv",
 ]
 DEFAULT_OUTPUT = ROOT / "evaluation/ground_truth.csv"
+DEFAULT_LEDGER = ROOT / "evaluation/review_decisions.csv"
 FIELDS = [
     "raw_text", "expected_topic_id", "taxonomy_version", "source_id",
     "source_type", "source_url", "review_status", "reviewer", "review_date", "notes"
@@ -27,6 +28,8 @@ FIELDS = [
 
 
 def load_csv(path: Path) -> list[dict[str, str]]:
+    if not path.exists():
+        return []
     with path.open(encoding="utf-8-sig", newline="") as handle:
         return list(csv.DictReader(handle))
 
@@ -39,10 +42,15 @@ def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
         writer.writerows(rows)
 
 
+def pair(row: dict[str, str]) -> tuple[str, str]:
+    return (row.get("raw_text", "").strip().casefold(), row.get("expected_topic_id", "").strip())
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--inputs", nargs="*", default=[str(p) for p in DEFAULT_INPUTS])
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
+    parser.add_argument("--ledger", default=str(DEFAULT_LEDGER))
     parser.add_argument("--taxonomy", default=str(ROOT / "data/taxonomy/taxonomy_v1.1.json"))
     parser.add_argument("--reviewer", default="")
     args = parser.parse_args()
@@ -62,46 +70,51 @@ def main() -> int:
             print(f"Skipping missing input: {path}")
 
     output = Path(args.output)
-    existing = load_csv(output) if output.exists() else []
-    seen = {(r.get("raw_text", "").strip().casefold(), r.get("expected_topic_id", "").strip()) for r in existing}
-    accepted = [r for r in existing if r.get("review_status", "").strip().lower() in {"verified", "approved"}]
-    accepted_keys = {(r.get("raw_text", "").strip().casefold(), r.get("expected_topic_id", "").strip()) for r in accepted}
-    pending = [r for r in candidates if (r.get("raw_text", "").strip().casefold(), r.get("expected_topic_id", "").strip()) not in seen]
-    print(f"Taxonomy {version}: {len(topics)} topics; {len(pending)} new candidates; {len(accepted)} already accepted labels.")
-    print("For every approval, inspect the original source and confirm both source eligibility and taxonomy fit.")
+    ledger_path = Path(args.ledger)
+    accepted = load_csv(output)
+    ledger = load_csv(ledger_path)
+    seen = {pair(row) for row in accepted} | {pair(row) for row in ledger}
+    pending = []
+    candidate_seen = set()
+    for row in candidates:
+        key = pair(row)
+        if not key[0] or key[1] not in topics or key in seen or key in candidate_seen:
+            continue
+        candidate_seen.add(key)
+        pending.append(row)
+
+    print(f"Taxonomy {version}: {len(topics)} topics; {len(pending)} new candidates; {len(accepted)} approved labels already in ground_truth.csv.")
+    print("Before approving, inspect the original source, permission/license, and taxonomy fit.")
     for index, row in enumerate(pending, start=1):
         topic_id = row.get("expected_topic_id", "").strip()
-        if topic_id not in topics:
-            print(f"SKIP invalid taxonomy ID: {topic_id}")
-            continue
-        print("\n" + "=" * 78)
+        print("\\n" + "=" * 78)
         print(f"[{index}/{len(pending)}] {row.get('source_id','')} | {topic_id} — {topics[topic_id].get('name','')}")
         print("Prompt:", row.get("raw_text", ""))
         print("Source:", row.get("source_url", ""))
         print("Notes:", row.get("notes", ""))
-        print("Check the source page and applicable license/permission before approval.")
         choice = input("[a]pprove / [r]eject / [s]kip / [q]uit: ").strip().lower()
         if choice == "q":
             break
         if choice not in {"a", "r"}:
             continue
-        review_date = date.today().isoformat()
-        note = input("Review note (optional): ").strip()
+        review_note = input("Review note (optional): ").strip()
         record = {key: str(row.get(key, "") or "") for key in FIELDS}
         record["taxonomy_version"] = version
         record["review_status"] = "verified" if choice == "a" else "rejected"
         record["reviewer"] = reviewer
-        record["review_date"] = review_date
-        record["notes"] = (record.get("notes", "") + (" | " if record.get("notes") else "") + f"Human review: {note}").strip()
-        existing.append(record)
-        key = (record["raw_text"].strip().casefold(), record["expected_topic_id"].strip())
-        seen.add(key)
+        record["review_date"] = date.today().isoformat()
+        record["notes"] = (record.get("notes", "") + (" | " if record.get("notes") else "") + f"Human review: {review_note}").strip()
+        ledger.append(record)
         if choice == "a":
-            accepted_keys.add(key)
-        write_csv(output, existing)
-        print(f"Saved {record['review_status']} label to {output}")
-    print(f"\nSaved {len(existing)} reviewed/candidate records; {len(accepted_keys)} currently accepted unique pairs.")
-    print("This is not a complete benchmark until 200+ distinct labels are approved and source eligibility is confirmed.")
+            accepted.append(record)
+            write_csv(output, accepted)
+        write_csv(ledger_path, ledger)
+        seen.add(pair(record))
+        print(f"Saved {record['review_status']} decision to {ledger_path}")
+        if choice == "a":
+            print(f"Approved mapping added to {output}")
+    print(f"\\nApproved unique labels in ground_truth.csv: {len({pair(row) for row in accepted})}")
+    print("Do not claim the benchmark is complete until 200+ distinct labels and source eligibility have been independently confirmed.")
     return 0
 
 
