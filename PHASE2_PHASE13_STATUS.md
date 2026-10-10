@@ -4,13 +4,6 @@ Updated: 2026-10-10 (source review pass)
 
 ## Latest work in this pass
 
-- Added a human-in-the-loop annotation CLI (`scripts/review_phase13_candidates.py`) that requires a named reviewer and explicit row-by-row decisions; it never auto-approves candidates.
-- Added a Phase 2 contributor intake schema and guide (`data/raw/interviews/contributor_report_template.csv`, `data/raw/interviews/CONTRIBUTION_GUIDE.md`) to collect first-hand, permissioned reports and capture consent/deduplication evidence.
-- Added `evaluation/HUMAN_REVIEW_WORKFLOW.md` with checks required before accepting a mapping.
-- Added `evaluation/codeprep_mappings_for_review.csv` with 78 additional candidate mappings from the CodePrep question bank whose upstream metadata declares CC BY 4.0; the source is a practice-question bank, not candidate experience reports, and mappings still need human review.
-
-## Latest work in this pass
-
 - Added `evaluation/SOURCE_REVIEW_LOG.md` with 12 publicly discoverable interview-experience candidates, topic-level summaries, candidate taxonomy mapping suggestions, and explicit source/legal/deduplication caveats.
 - Added `evaluation/source_backed_mappings_for_review.csv` with 202 unique source-linked topic-mapping candidates from publicly indexed interview reports. Every row remains `needs_human_review` and is excluded from benchmark metrics.
 - Added `scripts/check_phase_readiness.py`, which checks explicit completion fields and refuses to mark either phase ready while minimum acceptance gates are open.
