@@ -4,6 +4,13 @@ Updated: 2026-10-10 (source review pass)
 
 ## Latest work in this pass
 
+- Added a human-in-the-loop annotation CLI (`scripts/review_phase13_candidates.py`) that requires a named reviewer and explicit row-by-row decisions; it never auto-approves candidates.
+- Added a Phase 2 contributor intake schema and guide (`data/raw/interviews/contributor_report_template.csv`, `data/raw/interviews/CONTRIBUTION_GUIDE.md`) to collect first-hand, permissioned reports and capture consent/deduplication evidence.
+- Added `evaluation/HUMAN_REVIEW_WORKFLOW.md` with checks required before accepting a mapping.
+- Added `evaluation/codeprep_mappings_for_review.csv` with 78 additional candidate mappings from the CodePrep question bank whose upstream metadata declares CC BY 4.0; the source is a practice-question bank, not candidate experience reports, and mappings still need human review.
+
+## Latest work in this pass
+
 - Added `evaluation/SOURCE_REVIEW_LOG.md` with 12 publicly discoverable interview-experience candidates, topic-level summaries, candidate taxonomy mapping suggestions, and explicit source/legal/deduplication caveats.
 - Added `evaluation/source_backed_mappings_for_review.csv` with 202 unique source-linked topic-mapping candidates from publicly indexed interview reports. Every row remains `needs_human_review` and is excluded from benchmark metrics.
 - Added `scripts/check_phase_readiness.py`, which checks explicit completion fields and refuses to mark either phase ready while minimum acceptance gates are open.
@@ -16,6 +23,7 @@ Implemented in repository:
 - Extracted the Discipline Core course catalog from the user's available VIT syllabus PDF into `data/raw/syllabi/vit_cse_2024_2025_discipline_core_catalog.csv` (21 rows, printed page 2); added `data/raw/syllabi/README.md` with provenance and limitations.
 - Downloader script that fetches the PDF from VIT's official host, validates the PDF signature, and prints SHA-256.
 - Phase 2 README describing schema, source review, deduplication, legal-use checks, and ingestion expectations.
+- Contributor intake template and guide for first-hand reports with explicit permission, cohort checks, and duplicate evidence.
 
 Still required before Phase 2 can be marked complete:
 - Confirm at least 15 independent, eligible Amazon SDE-I reports after cross-post/deduplication checks.
@@ -32,6 +40,8 @@ Implemented in repository:
 - Empty `evaluation/ground_truth.csv` with provenance and human-review fields.
 - Evaluation script comparing keyword overlap, TF-IDF, and sentence embeddings, using development/validation/test splits and validation-only threshold tuning.
 - Documentation of benchmark requirements and limitations.
+- A human review CLI to approve/reject candidates explicitly and write decisions into the ground-truth file without auto-approval.
+- 78 additional CC BY 4.0 practice-question mapping candidates with attribution; still pending human verification.
 
 Additional licensed candidate pool added in the latest pass:
 - `evaluation/codeprep_mappings_for_review.csv` contains 78 question-to-topic candidates derived from the CodePrep Open Interview Questions dataset, whose published metadata declares CC BY 4.0; attribution and source details are documented in `data/raw/interviews/LICENSED_QUESTION_SOURCE.md`.
