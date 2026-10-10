@@ -1,39 +1,35 @@
-# Phase 13 — NLP Matching Evaluation
-
-This folder contains the initial evaluation harness and a **392-row candidate annotation set** for Prepline's taxonomy matching.
+# Phase 13 — Ground-Truth Benchmark
 
 ## Files
 
-- `ground_truth.csv`: 392 candidate mappings across the 56 topics in `data/taxonomy/taxonomy_v1.1.json`.
+- `ground_truth.csv`: empty schema template for examples that have been reviewed by a human.
+- `candidate_mappings_for_review.csv`: 392 draft candidate mappings covering 56 topics in `data/taxonomy/taxonomy_v1.1.json`. All are synthetic coverage prompts, not actual interview questions and not verified ground truth.
 - `evaluate_nlp.py`: compares keyword overlap, TF-IDF cosine similarity, and `all-MiniLM-L6-v2` sentence embeddings.
-- `requirements.txt`: packages needed by the evaluation script.
+- `requirements.txt`: required Python packages.
 
-## Important: candidate set, not verified ground truth
+## Ground-truth standard
 
-Every current row is marked `source_type=synthetic_candidate` and `review_status=needs_human_review`. These are original draft prompts generated to exercise taxonomy coverage; they are **not represented as real questions collected from company interviews** and must not be reported as 392 manually verified mappings.
+The blueprint requires 200+ manually verified mappings. A row qualifies only after a reviewer checks the original text and expected taxonomy node, confirms source/provenance, and records review status, reviewer, and review date. Synthetic candidates can help test the workflow but must not be included in final benchmark metrics.
 
-Before using this dataset for final benchmark metrics:
-1. Replace or supplement the generic candidate prompts with examples drawn from permitted, recorded sources (course syllabi, openly accessible interview write-ups, or independently written examples).
-2. Have a human reviewer confirm each `expected_topic_id` against the taxonomy and change `review_status` only after review.
-3. Record source URLs or stable source identifiers for sourced examples and respect each source's terms and applicable copyright restrictions.
-4. Ensure examples are varied and not merely templated from the target topic name. The current set is a pipeline smoke-test scaffold, not a reliable measure of real-world classification performance.
+Required columns in `ground_truth.csv`:
+- `raw_text`
+- `expected_topic_id`
+- `taxonomy_version`
+- `source_id`
+- `source_type`
+- `source_url`
+- `review_status`
+- `reviewer`
+- `review_date`
+- `notes`
 
-The project blueprint calls for 200+ manually verified mappings, with 70% development / 15% validation / 15% final test splits. The row count alone does not satisfy the manual-verification requirement.
+The source can be a permitted interview-experience page or syllabus item. Do not copy large passages from copyrighted sites. Store a short question/topic summary where needed and preserve provenance. Review source terms before bulk collection.
 
 ## Taxonomy
 
-The original `data/taxonomy/taxonomy_v1.0.json` is preserved. The expanded `data/taxonomy/taxonomy_v1.1.json` adds DSA, DBMS, OS, Computer Networks, and System Design topics. The evaluation script defaults to v1.1.
+The original `data/taxonomy/taxonomy_v1.0.json` is preserved. The expanded `data/taxonomy/taxonomy_v1.1.json` contains 56 topics spanning DSA, DBMS, OS, Computer Networks, and System Design.
 
-## Public references used to guide topic coverage
-
-These references support the *choice of subject areas*, not the claim that the candidate prompts were copied from or asked in interviews:
-
-- University of Delhi Computer Science syllabus listings: https://cs.du.ac.in/uploads/syllabus/NEP/ge2024.html
-- IIT Delhi CSE curriculum: https://cse.iitd.ac.in/academics/btech_links/curriculum.shtml
-- NITK CSE undergraduate courses: https://cse.nitk.ac.in/courses/ug
-- GeeksforGeeks OS, DBMS, and Computer Networks interview-preparation overview: https://www.geeksforgeeks.org/interview-prep/os-cn-dbms-interview-questions/
-
-## Run locally
+## Run
 
 From the repository root:
 
@@ -42,13 +38,17 @@ python -m pip install -r evaluation/requirements.txt
 python evaluation/evaluate_nlp.py --data evaluation/ground_truth.csv --taxonomy data/taxonomy/taxonomy_v1.1.json
 ```
 
-The sentence-embedding model is downloaded by `sentence-transformers` the first time it is used. If it cannot be loaded, that method is reported as skipped.
+The script intentionally refuses to produce metrics on a tiny placeholder dataset. Sentence embeddings require downloading `all-MiniLM-L6-v2` on first use.
 
-## Evaluation discipline
+## Evaluation protocol
 
-- Do not use rows marked `needs_human_review` for final benchmark claims.
-- Tune thresholds on validation data only.
-- Keep the final test split untouched until method and threshold choices are frozen.
+- Split into 70% development, 15% validation, 15% final test.
+- Tune similarity thresholds on validation only.
+- Do not use the final test set to choose the model, threshold, or preprocessing.
 - Report accuracy, macro precision, macro recall, and macro F1.
-- Inspect per-topic errors and class balance; aggregate metrics alone can hide weak topics.
-- Record taxonomy version, embedding model, threshold, data provenance, and reviewer status in the final report.
+- Record taxonomy version, model version, threshold, data provenance, and review status.
+- Review class balance and per-topic errors before making claims.
+
+## Current status
+
+The candidate annotation scaffold is committed. The verified benchmark is **not complete** until 200+ sourced mappings have passed human review. The interview index in `data/raw/interviews/` is a discovery list whose source eligibility and deduplication still need review.
