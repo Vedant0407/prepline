@@ -100,7 +100,7 @@ Reviewed current published terms for LeetCode and GeeksforGeeks. Both contain re
 - Updated the structural validator to require those fields in the interview index, aligning it with the readiness checker.
 - Added `workflow_dispatch` to the GitHub Actions workflow so repository validation can be triggered manually as well as on pushes and pull requests.
 
-These are workflow/schema improvements, not completion of the research gates. The 19 interview rows are still discovery candidates, no Phase 13 labels have been approved, and no benchmark metrics should be reported until the original sources and labels have actually been reviewed. The GitHub connector available in this session did not return push-triggered workflow runs, so CI success remains unverified.
+These are workflow/schema improvements, not completion of the research gates. The 19 interview rows are still discovery candidates, no Phase 13 labels have been approved, and no benchmark metrics should be reported until the original sources and labels have actually been reviewed. At the time of that earlier note, push-triggered workflow status had not yet been verified. A later run succeeded; see the CLI and packaging pass below.
 
 ## Pipeline implementation pass (2026-10-10)
 
@@ -111,6 +111,15 @@ Implemented reusable Python modules for:
 - Loading interview-index rows while preserving source review status and excluding unapproved rows from eligible-only results.
 - Unique-topic and weighted coverage calculations, with explicit warnings that overlap is not course depth or student proficiency.
 
-Added pipeline tests and updated CI to install the baseline mapping dependencies before running tests. The first run exposed a missing scikit-learn dependency in CI; the workflow was corrected to install NumPy, pandas, and scikit-learn. The follow-up run is pending verification.
+Added pipeline tests and updated CI to install the baseline mapping dependencies before running tests. The first run exposed a missing scikit-learn dependency in CI; the workflow was corrected to install NumPy, pandas, and scikit-learn. The follow-up run passed; later CLI tests and documentation changes also passed in GitHub Actions.
 
 These code additions do not fill the external evidence gaps: the syllabus file is still only a 21-course catalog extract, the 19 interview records are not cleared, the benchmark has zero approved labels, and no valid research benchmark scores exist yet.
+
+
+## CLI and packaging pass (2026-10-10)
+
+- Added a runnable CLI for taxonomy mapping (`map`), course-catalog search (`courses`), explicit topic-overlap scoring (`coverage`), and fail-closed research readiness checks (`readiness`).
+- Added Python package metadata and a `prepline` console entry point, developer setup documentation, and CLI tests.
+- The latest GitHub Actions run for commit `754bccaceee0e31ae28c7f46b3e6ee5b78afb245` completed successfully: [workflow run](https://github.com/Vedant0407/prepline/actions/runs/38071503442).
+
+The CLI is a working prototype, not evidence that the source-data gates have passed. The current VIT PDF provides a 21-row Discipline Core catalog on printed page 2, but does not include detailed module-level syllabi for those core courses in the extractable sections identified so far. The PDF has 10 curriculum pages followed by annexure material for other courses; course-topic mapping must not be inferred from course titles alone. Phase 2/13 remain blocked by source permission/independence review, detailed syllabus-topic evidence, and 200 genuinely human-reviewed mappings.
