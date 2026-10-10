@@ -44,7 +44,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     coverage = sub.add_parser("coverage", help="Calculate topic overlap from explicit topic IDs")
     coverage.add_argument("--syllabus-topic-ids", required=True, help="Comma-separated taxonomy IDs mapped from syllabus text")
-    coverage.add_argument("--interview-topic-ids", required=True, help="Comma-separated topic IDs from eligible interview data")
+    coverage.add_argument("--interview-topic-ids", help="Comma-separated topic IDs from eligible interview data (required unless --weights is used)")
     coverage.add_argument("--weights", help="Optional JSON object mapping topic IDs to numeric weights")
 
     sub.add_parser("readiness", help="Run the fail-closed Phase 2/13 readiness check")
@@ -73,13 +73,15 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "coverage":
         syllabus_ids = _csv_ids(args.syllabus_topic_ids)
-        interview_ids = _csv_ids(args.interview_topic_ids)
+        interview_ids = _csv_ids(args.interview_topic_ids or "")
         if args.weights:
             weights = json.loads(Path(args.weights).read_text(encoding="utf-8"))
             if not isinstance(weights, dict):
                 raise SystemExit("--weights must point to a JSON object of topic_id: weight")
             result = weighted_coverage(syllabus_ids, weights)
         else:
+            if not args.interview_topic_ids:
+                raise SystemExit("--interview-topic-ids is required unless --weights is used")
             result = topic_coverage(syllabus_ids, interview_ids)
         print(json.dumps(result, indent=2))
         return 0
