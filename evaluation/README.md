@@ -6,7 +6,7 @@
 
 - `ground_truth.csv`: empty schema template for examples that have been reviewed by a human.
 - `candidate_mappings_for_review.csv`: 392 synthetic coverage prompts, not actual interview questions and not ground truth.
-- ``source_backed_mappings_for_review.csv`: 109 topic-level mapping candidates derived from publicly indexed interview reports. Each is marked `needs_human_review`; none is automatically promoted to ground truth.
+- ``source_backed_mappings_for_review.csv`: 214 topic-level mapping candidates derived from publicly indexed interview reports. Each is marked `needs_human_review`; none is automatically promoted to ground truth.
 - `evaluate_nlp.py`: compares keyword overlap, TF-IDF cosine similarity, and `all-MiniLM-L6-v2` sentence embeddings.
 - `requirements.txt`: required Python packages.
 
@@ -64,4 +64,4 @@ The script requires explicit `verified`/`approved` review status, reviewer, revi
 
 ## Current status
 
-The candidate annotation scaffold is committed. The verified benchmark is **not complete** until 200+ sourced mappings have passed human review. The interview index in `data/raw/interviews/` is a discovery list whose source eligibility and deduplication still need review.
+The candidate annotation scaffold is committed. The candidate pool now contains 214 source-linked rows, but the verified benchmark is **not complete** until 200+ distinct sourced mappings have passed human review. Candidate rows are not ground truth. The interview index in `data/raw/interviews/` is a discovery list whose source eligibility and deduplication still need review.
