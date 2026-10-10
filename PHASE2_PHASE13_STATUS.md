@@ -93,3 +93,11 @@ Duplicate cleanup note (2026-10-10): 39 repeated raw-text/topic pairs were remov
 ## Source terms review update (2026-10-10)
 
 Reviewed current published terms for LeetCode and GeeksforGeeks. Both contain restrictions relevant to scraping/systematic compilation; the terms review is documented at `data/raw/interviews/SOURCE_TERMS_REVIEW.md`. Therefore current public-page summaries remain discovery candidates only. No written permission has been obtained, and Phase 2 cannot be accepted as complete on the basis of these sources alone.
+
+## Latest follow-up implementation (2026-10-10)
+
+- Added explicit Phase 2 evidence columns to all 19 interview-index rows: `deduplication_evidence`, `permission_basis`, `reviewer`, and `review_date`. Existing values are intentionally blank because no permission or independent-review evidence has been established.
+- Updated the structural validator to require those fields in the interview index, aligning it with the readiness checker.
+- Added `workflow_dispatch` to the GitHub Actions workflow so repository validation can be triggered manually as well as on pushes and pull requests.
+
+These are workflow/schema improvements, not completion of the research gates. The 19 interview rows are still discovery candidates, no Phase 13 labels have been approved, and no benchmark metrics should be reported until the original sources and labels have actually been reviewed. The GitHub connector available in this session did not return push-triggered workflow runs, so CI success remains unverified.
