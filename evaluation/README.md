@@ -6,7 +6,7 @@
 
 - `ground_truth.csv`: empty schema template for examples that have been reviewed by a human.
 - `candidate_mappings_for_review.csv`: 392 synthetic coverage prompts, not actual interview questions and not ground truth.
-- `source_backed_mappings_for_review.csv`: 54 topic-level mapping candidates derived from publicly indexed interview reports. Each is marked `needs_human_review`; none is automatically promoted to ground truth.
+- ``source_backed_mappings_for_review.csv`: 84 topic-level mapping candidates derived from publicly indexed interview reports. Each is marked `needs_human_review`; none is automatically promoted to ground truth.
 - `evaluate_nlp.py`: compares keyword overlap, TF-IDF cosine similarity, and `all-MiniLM-L6-v2` sentence embeddings.
 - `requirements.txt`: required Python packages.
 
@@ -51,7 +51,7 @@ python -m pip install -r evaluation/requirements.txt
 python evaluation/evaluate_nlp.py --data evaluation/ground_truth.csv --taxonomy data/taxonomy/taxonomy_v1.1.json
 ```
 
-The script intentionally refuses to produce metrics on a tiny placeholder dataset. Sentence embeddings require downloading `all-MiniLM-L6-v2` on first use.
+The script requires explicit `verified`/`approved` review status, reviewer, review date, source ID, and source URL before it treats rows as benchmark ground truth. It also rejects duplicate text/topic pairs. `--allow-unreviewed` is available only for diagnostics and marks the output `diagnostic_only_unreviewed_labels`; never report those scores as benchmark results. The script intentionally refuses to produce metrics on a tiny placeholder dataset. Sentence embeddings require downloading `all-MiniLM-L6-v2` on first use.
 
 ## Evaluation protocol
 
