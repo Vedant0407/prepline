@@ -130,6 +130,7 @@ def main():
     parser.add_argument("--data", default=str(DEFAULT_DATA))
     parser.add_argument("--taxonomy", default=str(DEFAULT_TAXONOMY))
     parser.add_argument("--output", default=str(ROOT / "evaluation" / "results.json"))
+    parser.add_argument("--allow-unreviewed", action="store_true", help="Diagnostic only: permit candidate labels; output is explicitly marked non-benchmark.")
     args = parser.parse_args()
 
     frame = pd.read_csv(args.data)
@@ -138,8 +139,26 @@ def main():
     if missing:
         raise ValueError(f"CSV is missing required columns: {sorted(missing)}")
     frame = frame.dropna(subset=list(required))
+    provenance_required = {"source_id", "source_type", "source_url", "review_status", "reviewer", "review_date"}
+    missing_provenance = provenance_required - set(frame.columns)
+    if missing_provenance and not args.allow_unreviewed:
+        raise ValueError(f"Ground-truth CSV is missing provenance/review columns: {sorted(missing_provenance)}")
+    if not args.allow_unreviewed:
+        accepted_status = frame["review_status"].astype(str).str.strip().str.lower().isin({"verified", "approved"})
+        provenance_ok = (
+            frame["source_id"].astype(str).str.strip().ne("")
+            & frame["source_url"].astype(str).str.match(r"^https?://", case=False)
+            & frame["reviewer"].astype(str).str.strip().ne("")
+            & frame["review_date"].astype(str).str.strip().ne("")
+        )
+        rejected = int((~(accepted_status & provenance_ok)).sum())
+        if rejected:
+            raise ValueError(f"{rejected} rows are not explicitly verified/approved with reviewer, date, source ID, and URL. Candidate labels are not benchmark ground truth. Use --allow-unreviewed only for a clearly labelled diagnostic run.")
     frame["raw_text"] = frame["raw_text"].astype(str).str.strip()
     frame = frame[frame["raw_text"].ne("")]
+    duplicate_pairs = frame.duplicated(subset=["raw_text", "expected_topic_id"]).sum()
+    if duplicate_pairs:
+        raise ValueError(f"Found {int(duplicate_pairs)} duplicate raw_text/topic pairs. Deduplicate before evaluation.")
     if len(frame) < 20:
         raise ValueError(
             f"Only {len(frame)} labelled rows found. Add manually verified examples "
@@ -177,12 +196,14 @@ def main():
             "test": int(len(test)),
         },
         "random_state": RANDOM_STATE,
+        "benchmark_validity": "diagnostic_only_unreviewed_labels" if args.allow_unreviewed else "reviewed_labels_required",
         "methods": {},
         "notes": [
             "Ground-truth labels must be manually verified.",
             "Threshold selection uses validation data only.",
             "Report final test metrics only after freezing method and threshold choices.",
             "Inspect per-topic errors and class imbalance before drawing conclusions.",
+            "The development split is held for development; zero-shot baselines do not fit parameters on it.",
         ],
     }
 
@@ -196,6 +217,14 @@ def main():
                 "threshold": float(threshold),
                 "validation_macro_f1": round(val_f1, 4),
                 "test_metrics": calculate_metrics(y_test, test_predictions),
+                "per_topic_test_metrics": {
+                    topic: {
+                        "support": int(sum(label == topic for label in y_test)),
+                        "precision": round(float(precision_recall_fscore_support(y_test, test_predictions, labels=[topic], average=None, zero_division=0)[0][0]), 4),
+                        "recall": round(float(precision_recall_fscore_support(y_test, test_predictions, labels=[topic], average=None, zero_division=0)[1][0]), 4),
+                        "f1": round(float(precision_recall_fscore_support(y_test, test_predictions, labels=[topic], average=None, zero_division=0)[2][0]), 4),
+                    } for topic in sorted(set(y_test))
+                },
             }
             print(f"{name}: threshold={threshold:.2f}; test={report['methods'][name]['test_metrics']}")
         except RuntimeError as exc:
