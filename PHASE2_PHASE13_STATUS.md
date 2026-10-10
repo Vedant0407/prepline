@@ -101,3 +101,16 @@ Reviewed current published terms for LeetCode and GeeksforGeeks. Both contain re
 - Added `workflow_dispatch` to the GitHub Actions workflow so repository validation can be triggered manually as well as on pushes and pull requests.
 
 These are workflow/schema improvements, not completion of the research gates. The 19 interview rows are still discovery candidates, no Phase 13 labels have been approved, and no benchmark metrics should be reported until the original sources and labels have actually been reviewed. The GitHub connector available in this session did not return push-triggered workflow runs, so CI success remains unverified.
+
+## Pipeline implementation pass (2026-10-10)
+
+Implemented reusable Python modules for:
+- Taxonomy phrase matching and text normalization.
+- TF-IDF topic ranking and optional sentence-embedding ranking.
+- Loading and searching the currently extracted VIT course catalog, with optional local-PDF text extraction.
+- Loading interview-index rows while preserving source review status and excluding unapproved rows from eligible-only results.
+- Unique-topic and weighted coverage calculations, with explicit warnings that overlap is not course depth or student proficiency.
+
+Added pipeline tests and updated CI to install the baseline mapping dependencies before running tests. The first run exposed a missing scikit-learn dependency in CI; the workflow was corrected to install NumPy, pandas, and scikit-learn. The follow-up run is pending verification.
+
+These code additions do not fill the external evidence gaps: the syllabus file is still only a 21-course catalog extract, the 19 interview records are not cleared, the benchmark has zero approved labels, and no valid research benchmark scores exist yet.
