@@ -5,7 +5,7 @@ Updated: 2026-10-10 (source review pass)
 ## Latest work in this pass
 
 - Added `evaluation/SOURCE_REVIEW_LOG.md` with 12 publicly discoverable interview-experience candidates, topic-level summaries, candidate taxonomy mapping suggestions, and explicit source/legal/deduplication caveats.
-- Added `evaluation/source_backed_mappings_for_review.csv` with 109 source-linked topic-mapping candidates from publicly indexed interview reports. Every row remains `needs_human_review` and is excluded from benchmark metrics.
+- Added `evaluation/source_backed_mappings_for_review.csv` with 214 source-linked topic-mapping candidates from publicly indexed interview reports. Every row remains `needs_human_review` and is excluded from benchmark metrics.
 - Added `scripts/check_phase_readiness.py`, which checks explicit completion fields and refuses to mark either phase ready while minimum acceptance gates are open.
 
 ## Phase 2 — Dataset construction
@@ -59,15 +59,20 @@ The official VIT PDF download was attempted from the current execution environme
 ### Additional implementation pass (2026-10-10)
 
 - Extracted the user's available VIT CSE 2024-25 syllabus PDF into a structured Discipline Core catalog at `data/raw/syllabi/vit_cse_2024_2025_discipline_core_catalog.csv` (21 rows, printed page 2). The original PDF binary is not committed, and this is not a full topic-level syllabus extraction.
-- Expanded the source-linked mapping candidate list from 84 to 109 rows using additional publicly indexed interview reports. All remain `needs_human_review`; the count does not satisfy the manual-verification gate.
+- Expanded the source-linked mapping candidate list to 214 rows using publicly indexed interview reports. All remain `needs_human_review`; candidate count does not satisfy the manual-verification gate.
 - Updated the evaluator to reject unreviewed labels by default and include per-topic diagnostics.
 
 ### Final status
 
-**Not complete / not accepted yet.** No ground-truth rows have been promoted to verified, because a model-generated label cannot honestly be represented as a human reviewer’s approval. The 109 candidate mapping rows are for review only. Phase 2 sources also remain pending legal-use and independent-report checks. The readiness checker is intended to fail closed until these conditions are met.
+**Not complete / not accepted yet.** No ground-truth rows have been promoted to verified, because a model-generated label cannot honestly be represented as a human reviewer’s approval. The 214 candidate mapping rows are for review only. Phase 2 sources also remain pending legal-use and independent-report checks. The readiness checker is intended to fail closed until these conditions are met.
 
 To finish the remaining external/manual gates, a human reviewer with access to the original pages must:
 1. Review current terms/permission and independence for at least 15 eligible interview reports and set review fields only when supported.
 2. Download the official PDF locally using `python scripts/download_vit_syllabus.py`, validate text extraction, and commit the PDF only if permitted by its terms; otherwise keep the official source URL and record the access decision.
 3. Verify at least 200 source-backed mappings one by one, mark them reviewed with a real reviewer identity/date, and ensure taxonomy labels are supported by each source.
 4. Run `python scripts/check_phase_readiness.py`, fix any remaining gates, then run `python evaluation/evaluate_nlp.py --data evaluation/ground_truth.csv --taxonomy data/taxonomy/taxonomy_v1.1.json`. Review split integrity and save the resulting metrics only if all preconditions pass.
+
+
+## Latest candidate expansion (2026-10-10)
+
+The source-backed candidate pool now has 214 rows across indexed public interview-experience pages. Rows remain explicitly unverified; several sources may describe overlapping question patterns, and duplicate question/topic pairs must be resolved during review. This does not count as 200 accepted benchmark labels. The ground-truth CSV remains header-only.
