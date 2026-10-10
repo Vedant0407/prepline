@@ -3,6 +3,7 @@ name: Validate Prepline data
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   data-validation:
