@@ -87,7 +87,7 @@ def main() -> int:
     print("Before approving, inspect the original source, permission/license, and taxonomy fit.")
     for index, row in enumerate(pending, start=1):
         topic_id = row.get("expected_topic_id", "").strip()
-        print("\\n" + "=" * 78)
+        print("\n" + "=" * 78)
         print(f"[{index}/{len(pending)}] {row.get('source_id','')} | {topic_id} — {topics[topic_id].get('name','')}")
         print("Prompt:", row.get("raw_text", ""))
         print("Source:", row.get("source_url", ""))
