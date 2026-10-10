@@ -5,7 +5,8 @@
 - `SOURCE_REVIEW_LOG.md` at repository root (`evaluation/SOURCE_REVIEW_LOG.md`): source discovery log and candidate taxonomy mappings. These are not legally cleared sources or human-verified labels.
 
 - `ground_truth.csv`: empty schema template for examples that have been reviewed by a human.
-- `candidate_mappings_for_review.csv`: 392 draft candidate mappings covering 56 topics in `data/taxonomy/taxonomy_v1.1.json`. All are synthetic coverage prompts, not actual interview questions and not verified ground truth.
+- `candidate_mappings_for_review.csv`: 392 synthetic coverage prompts, not actual interview questions and not ground truth.
+- `source_backed_mappings_for_review.csv`: 54 topic-level mapping candidates derived from publicly indexed interview reports. Each is marked `needs_human_review`; none is automatically promoted to ground truth.
 - `evaluate_nlp.py`: compares keyword overlap, TF-IDF cosine similarity, and `all-MiniLM-L6-v2` sentence embeddings.
 - `requirements.txt`: required Python packages.
 
