@@ -21,6 +21,11 @@ Phase 2 and Phase 13 are **in progress, not accepted as complete**. The reposito
 - [Phase 13 review CLI](scripts/review_phase13_candidates.py) (approved labels go to `ground_truth.csv`; all decisions go to `review_decisions.csv`)
 - [Phase 2 contributor guide](data/raw/interviews/CONTRIBUTION_GUIDE.md)
 - [Licensed CodePrep candidate mappings](evaluation/codeprep_mappings_for_review.csv)
+- [Taxonomy mapping implementation](pipeline/taxonomy_mapper.py)
+- [Syllabus catalog parser](pipeline/syllabus_parser.py)
+- [Interview index parser](pipeline/interview_parser.py)
+- [Topic coverage scoring](pipeline/scoring.py)
+- [Pipeline tests](tests/test_pipeline_modules.py)
 
 ## Important data-quality rule
 
