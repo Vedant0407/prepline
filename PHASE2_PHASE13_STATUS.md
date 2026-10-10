@@ -33,15 +33,19 @@ Implemented in repository:
 - Evaluation script comparing keyword overlap, TF-IDF, and sentence embeddings, using development/validation/test splits and validation-only threshold tuning.
 - Documentation of benchmark requirements and limitations.
 
+Additional licensed candidate pool added in the latest pass:
+- `evaluation/codeprep_mappings_for_review.csv` contains 78 question-to-topic candidates derived from the CodePrep Open Interview Questions dataset, whose published metadata declares CC BY 4.0; attribution and source details are documented in `data/raw/interviews/LICENSED_QUESTION_SOURCE.md`.
+- These are practice questions, not candidate experience reports, and their taxonomy labels are machine-suggested; every row remains `needs_human_review`.
+
 Still required before Phase 13 can be marked complete:
-- Collect at least 200 source-backed examples permitted for this use.
+- Collect at least 200 source-backed examples permitted for this use and suitable for the benchmark.
 - Have a human reviewer verify each text-to-topic mapping and fill reviewer/date/status fields.
 - Ensure the final test split is untouched during model/threshold selection.
 - Run the evaluation on verified examples and save/review metrics and per-topic errors.
 
 ## Important interpretation
 
-File counts are not completion evidence by themselves. The repository now contains scaffolding and a source discovery index, but both phases remain pending their explicit validation gates above. Do not present synthetic candidates as real interview questions or as manually verified ground truth.
+File counts are not completion evidence by themselves. The repository now contains scaffolding, a public-source discovery index, and a licensed practice-question candidate pool, but both phases remain pending their explicit validation gates above. Do not present synthetic candidates as real interview questions or as manually verified ground truth.
 
 
 ## Final execution attempt (2026-10-10)
