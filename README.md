@@ -26,10 +26,17 @@ Phase 2 and Phase 13 are **in progress, not accepted as complete**. The reposito
 - [Interview index parser](pipeline/interview_parser.py)
 - [Topic coverage scoring](pipeline/scoring.py)
 - [Pipeline tests](tests/test_pipeline_modules.py)
+- [Command-line interface](pipeline/cli.py)
+- [Local setup and usage guide](docs/USAGE.md)
+- [Python project metadata](pyproject.toml)
 
 ## Important data-quality rule
 
 The source-linked mappings are **candidates**, not verified ground truth. Do not report model accuracy, precision, recall, or F1 as benchmark results until at least 200 source-backed labels have been verified by a real reviewer, source provenance and permissions have been checked, and the final test split has remained untouched during model selection.
+
+## Run the prototype
+
+Install the package with `python -m pip install -e .`, then try `python -m pipeline.cli map "dynamic programming"`, `python -m pipeline.cli courses "Operating Systems"`, or `python -m pipeline.cli coverage --syllabus-topic-ids dsa.arrays,dsa.graphs --interview-topic-ids dsa.arrays,dbms.normalization`. See [docs/USAGE.md](docs/USAGE.md) for setup and limitations.
 
 ## Check readiness
 
