@@ -23,7 +23,8 @@ REQUIRED_MAPPING = {
 REQUIRED_INTERVIEW = {
     "report_id", "company", "role", "rounds", "question_topic_summary",
     "source_url", "source_date_or_page_date", "source_platform",
-    "deduplication_status", "source_review_status", "legal_review_status"
+    "deduplication_status", "source_review_status", "legal_review_status",
+    "deduplication_evidence", "permission_basis", "reviewer", "review_date"
 }
 
 
